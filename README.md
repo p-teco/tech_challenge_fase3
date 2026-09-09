@@ -26,3 +26,27 @@ geográfica.
 | População municipal | [basedosdados.org](https://basedosdados.org/dataset/d30222ad-7a5c-4778-a1ec-f0785371d1ca?table=0c279444-165b-41da-92cd-50fd7e66baa1) |
 | Malha de municípios (DTB 2024) | [ibge.gov.br](https://www.ibge.gov.br/explica/codigos-dos-municipios.php) |
 | Cadastro Único — cadastros e renda per capita | [dados.gov.br](https://dados.gov.br/dados/conjuntos-dados/pessoas-inscritas-no-cadastro-unico-por-faixa-de-renda-per-capita) |
+
+## Como a Gold foi montada
+
+A tabela final (`gold_alfabetizacao.csv`) tem uma linha por aluno por
+ano (3.867.999 linhas, 44 colunas), juntando o indicador de
+alfabetização com o contexto municipal (população, CadÚnico, metas) por
+`id_municipio` e `ano`.
+ 
+#### Decisões que foram tomadas:
+ 
+- **`id_escola` é um código anonimizado** nos microdados de alunos
+  não corresponde ao código real de escola usado em outras bases
+  públicas (isso é proposital, para proteger a identidade dos alunos).
+  Por isso, não foi possível cruzar informação por escola; todo o
+  enriquecimento externo ficou no nível de município.
+- **`proficiencia` define `alfabetizado` por um corte fixo (743
+  pontos)** na escala do Saeb ou seja, é a mesma informação, só que
+  em outra forma. Por isso essa coluna existe na base só para conferência,
+  e não deve ser usada como variável de entrada do modelo.
+- Cerca de 13% dos registros correspondem a alunos que não responderam
+  à prova (ausentes ou presentes sem preencher o caderno) esses não
+  têm proficiência aferida e não representam um resultado pedagógico
+  real. Eles ficam marcados na coluna `elegivel_modelagem`, e a
+  modelagem usa apenas quem tem valor 1 ali (~3,35 milhões de alunos).
