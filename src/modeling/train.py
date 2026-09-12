@@ -7,6 +7,7 @@ são incorporadas ao Pipeline junto com o algoritmo. O treino acontece sempre e
 somente sobre os dados de 2023, nunca sobre 2024 que será usado para teste, para não vazar informações.
 """
 
+import time
 import pandas as pd
 from sklearn.pipeline import Pipeline
 
@@ -34,21 +35,21 @@ def split_temporal(df: pd.DataFrame, ano_treino: int = 2023, ano_teste: int = 20
     colunas sejam usadas como feature.
     """
     features = FEATURES_NUMERICAS + FEATURES_CATEGORICAS
-
+ 
     df_treino = df[df["ano"] == ano_treino]
     df_teste = df[df["ano"] == ano_teste]
-
+ 
     X_train = df_treino[features].copy()
     y_train = df_treino[COLUNA_ALVO].copy()
-
+ 
     X_test = df_teste[features].copy()
     y_test = df_teste[COLUNA_ALVO].copy()
-
+ 
     chaves_teste = df_teste[COLUNAS_CHAVE].copy()
-
+ 
     print(f"Treino ({ano_treino}): {len(X_train):,} registros")
     print(f"Teste  ({ano_teste}): {len(X_test):,} registros")
-
+ 
     return X_train, X_test, y_train, y_test, chaves_teste
 
 
@@ -78,15 +79,31 @@ def treinar_modelos(modelos: dict, X_train: pd.DataFrame, y_train: pd.Series) ->
         {"Regressão Logística": LogisticRegression(...),
          "Random Forest": RandomForestClassifier(...)}
 
-    Retorna um dicionário {nome: pipeline_treinado}.
+    Retorna:
+    - pipelines_treinados: dicionário {nome: pipeline_treinado}
+    - tempos: dicionário {nome: tempo_em_segundos}
     """
     pipelines_treinados = {}
-
+    tempos = {}
+ 
     for nome, modelo in modelos.items():
         print(f"Treinando: {nome}...")
+        inicio = time.perf_counter()
+ 
         pipeline = construir_pipeline(modelo)
         pipeline.fit(X_train, y_train)
+ 
+        fim = time.perf_counter()
+        duracao = fim - inicio
+ 
         pipelines_treinados[nome] = pipeline
-        print(f"  Concluído.")
-
-    return pipelines_treinados
+        tempos[nome] = duracao
+ 
+        minutos, segundos = divmod(duracao, 60)
+        print(f"  Concluído em {int(minutos)}min {segundos:.1f}s ({duracao:.1f}s total)")
+ 
+    print("\nResumo de tempos de treino:")
+    for nome, duracao in sorted(tempos.items(), key=lambda item: item[1]):
+        print(f"  {nome}: {duracao:.1f}s")
+ 
+    return pipelines_treinados, tempos

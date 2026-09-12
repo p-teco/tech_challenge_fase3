@@ -126,7 +126,7 @@ def construir_preprocessador() -> ColumnTransformer:
 
     transformador_categorico = Pipeline(steps=[
         ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("onehot", OneHotEncoder(drop="first", handle_unknown="ignore")),
+        ("onehot", OneHotEncoder(drop="first", handle_unknown="ignore", sparse_output=False)),
     ])
 
     preprocessador = ColumnTransformer(transformers=[
