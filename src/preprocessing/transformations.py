@@ -23,8 +23,6 @@ FEATURES_NUMERICAS = [
     "pct_pes_pob",
     "pct_pes_baixa_renda",
     "pct_pes_acima_meio_sm",
-    "meta_municipio_2025",
-    "meta_uf_2025",
 ]
 
 FEATURES_CATEGORICAS = [

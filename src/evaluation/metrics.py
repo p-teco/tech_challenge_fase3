@@ -21,7 +21,7 @@ from sklearn.metrics import (
 # Threshold de decisão escolhido a partir do sweep de thresholds
 # (ver notebooks/Modelagem.ipynb): ponto onde o F1 macro atinge seu
 # pico, equilibrando recall e precisão entre as duas classes. 
-THRESHOLD_DECISAO = 0.55
+THRESHOLD_DECISAO = 0.60
 
 
 def prever_com_threshold(pipeline, X: pd.DataFrame, threshold: float = THRESHOLD_DECISAO) -> np.ndarray:
