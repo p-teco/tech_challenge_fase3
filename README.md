@@ -1,3 +1,27 @@
+## Contexto do problema
+
+A alfabetização na idade certa é um dos indicadores mais importantes
+do desenvolvimento educacional e social do Brasil, mas conhecer a
+taxa atual não é suficiente para orientar políticas públicas efetivas.
+Gestores educacionais precisam antecipar riscos, identificar regiões
+mais vulneráveis e entender quais fatores realmente pesam sobre o
+desempenho dos alunos, sem essa camada de análise decisões de
+investimento e intervenção continuam sendo tomadas de forma reativa,
+depois que o resultado já aconteceu.
+
+Este projeto parte dos microdados do Indicador Criança Alfabetizada
+(2023-2024) e busca entender em que medida fatores territoriais e
+socioeconômicos informação já disponível publicamente antes mesmo
+do resultado da avaliação conseguem explicar e antecipar a
+alfabetização de um aluno.
+
+## Objetivo analítico
+
+Desenvolver um modelo de classificação supervisionada capaz de prever
+se um aluno será considerado alfabetizado, utilizando variáveis
+educacionais, territoriais e socioeconômicas e a partir desse
+modelo, responder perguntas de política pública.
+
 ## Descrição das bases utilizadas
  
 O projeto usa como fonte central o **Indicador Criança Alfabetizada**,
