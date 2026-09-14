@@ -33,7 +33,7 @@ FEATURES_CATEGORICAS = [
 COLUNA_ALVO = "alfabetizado"
 
 # Mantidas para chaves de agregação e auditoria, nunca como feature.
-COLUNAS_CHAVE = ["id_aluno", "id_municipio", "ano"]
+COLUNAS_CHAVE = ["id_aluno", "id_municipio", "nome_municipio", "ano"]
 
 
 def filtrar_registros_invalidos(df: pd.DataFrame) -> pd.DataFrame:
